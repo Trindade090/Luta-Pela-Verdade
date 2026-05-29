@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Guerra Contra o Modernismo: De Pio IX a Pio XII</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #FFFFFF;
+            color: #2b2b2b;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #FFCC00;
+            padding: 40px 10px;
+            text-align: center;
+            border-bottom: 5px solid #d4af37;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.3em;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        header p {
+            margin: 10px 0 0 0;
+            font-style: italic;
+            color: #333;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 25px;
+            background: #FAFAFA;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+        }
+        
+        /* ==========================================
+           ESTRUTURA DO BARALHO DESLIZANTE (SLIDER)
+           ========================================== */
+        .carrossel-janela {
+            overflow: hidden; /* Esconde as fotos que estão na fila */
+            width: 320px;
+            height: 400px;
+            margin: 20px auto 10px auto;
+            border: 3px solid #FFCC00;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background: #fff;
+            position: relative;
+        }
+        .carrossel-esteira {
+            display: flex; /* Coloca as fotos uma do lado da outra */
+            width: calc(320px * 4); /* Largura total de 4 fotos */
+            transition: transform 0.6s ease-in-out; /* Efeito de deslizar o baralho */
+        }
+        .carrossel-esteira img {
+            width: 320px;
+            height: 400px;
+            object-fit: cover;
+        }
+        .carrossel-legenda-box {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #000;
+            height: 30px;
+        }
+
+        h2 {
+            color: #000000;
+            border-bottom: 3px solid #FFCC00;
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+        h3 {
+            color: #b38600;
+            margin-top: 25px;
+        }
+        p {
+            text-align: justify;
+            font-size: 1.05em;
+        }
+
+        .aba-importancia {
+            background-color: #FFFDF0;
+            border-left: 6px solid #FFCC00;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .grid-papas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .papa-card {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn-retratil {
+            background-color: #000000;
+            color: #FFCC00;
+            font-family: 'Georgia', serif;
+            font-size: 1.1em;
+            font-weight: bold;
+            width: 100%;
+            padding: 15px;
+            text-align: left;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-retratil:hover {
+            background-color: #222222;
+        }
+        .conteudo-retratil {
+            background-color: #FFFDF0;
+            border: 1px solid #FFCC00;
+            border-top: none;
+            padding: 20px;
+            display: none;
+            border-radius: 0 0 4px 4px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sistema-box {
+            background-color: #FFFDF0;
+            border: 2px dashed #FFCC00;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 40px;
+        }
+        .controles {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        input, select, button {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Georgia', serif;
+        }
+        input { flex: 1; min-width: 180px; }
+        button {
+            background-color: #FFCC00;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #E6B800;
+        }
+        
+        .lista-enciclicas {
+            list-style-type: none;
+            padding: 0;
+        }
+        .lista-enciclicas li {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 5px solid #FFCC00;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .enciclica-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+        .enciclica-resumo {
+            font-size: 0.95em;
+            color: #555;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+        .lista-enciclicas a {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f1f1;
+            margin-top: 40px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>O Trono de Pedro e a Batalha pelo Dogma</h1>
+        <p>A Fortaleza da Fé Contra os Erros do Mundo Moderno: De Pio IX a Pio XII</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="carrossel-janela">
+            <div id="esteiraPapas" class="carrossel-esteira">
+                <img src="papas/pio9.jpg" alt="Papa Pio IX">
+                <img src="papas/leao13.jpg" alt="Papa Leão XIII">
+                <img src="papas/pio10.jpg" alt="Papa São Pio X">
+                <img src="papas/pio12.jpg" alt="Papa Pio XII">
+            </div>
+        </div>
+        <div id="legendaPapa" class="carrossel-legenda-box">Papa Pio IX (1846 – 1878)</div>
+
+        <section>
+            <h2>O que foi a heresia do Modernismo e o Espírito Revolucionário?</h2>
+            <p>
+                Para quem não estuda a história interna da Igreja, o termo <strong>Modernismo</strong> pode parecer algo positivo, associado a progresso ou avanço tecnológico. No entanto, no contexto da história religiosa da virada do século XIX para o século XX, ele representou um movimento filosófico e teológica que tentava alterar drasticamente o coração do Catolicismo. A ideia central do modernismo era a de que as verdades espirituais e os dogmas tradicionais deveriam mudar e evoluir de acordo com a moda, o pensamento científico secular e a política de cada época, tornando a fé algo relativo.
+            </p>
+            <p>
+                A reação da liderança católica contra o chamado "espírito revolucionário" foi rígida e implacável. Os Papas desse período enxergaram que essa tendência tentava esvaziar o sentido da religião por dentro. A linha de defesa teve início histórico com o <strong>Papa Pio IX</strong>, que bateu de frente contra as revoluções liberais na Europa e a perda dos territórios do Vaticano, e seguiu firme ao longo de mais de um século com seus sucessores Leão XIII, São Pio X, Pio XI e Pio XII, todos focados em manter a rigidez da fé imutável.
+            </p>
+        </section>
+
+        <section class="aba-importancia">
+            <h2>A Importância das Encíclicas Magisteriais</h2>
+            <p>
+                As <strong>Encíclicas</strong> são, de forma simples, grandes cartas oficiais escritas diretamente pelos Papas e distribuídas para os bispos e fiéis do mundo inteiro. Para o público geral, a importância histórica desses documentos é gigantesca: eles funcionam como o registro definitivo de momentos marcantes da humanidade, mas sob o ponto de vista estrito e milenar da Igreja Católica.
+            </p>
+            <p>
+                Enquanto o mundo secular passava por transformações profundas como revoluções industriais, grandes guerras mundiais, a ascensão do comunismo e novos pensamentos filosóficos, a Igreja utilizava as encíclicas como um "freio de mão". O objetivo era claro: provar que, embora as sociedades mudem e as correntes ideológicas passem, as diretrizes teológicas e morais do catolicismo deveriam permanecer fixas e resistentes a qualquer pressão externa, servindo como uma testemunha intocável do tempo.
+            </p>
+        </section>
+
+        <section>
+            <h2>Quem foram os líderes dessa resistência?</h2>
+            <div class="grid-papas">
+                <div class="papa-card">
+                    <h3>Pio IX (1846–1878)</h3>
+                    <p>O pontífice que governou por mais tempo na era moderna. Ele inaugurou a oposição aberta às ideologias revolucionárias e ao liberalismo radical através do <em>Syllabus</em>, um catálogo detalhado que condenava os erros do mundo moderno.</p>
+                </div>
+                <div class="papa-card">
+                    <h3>Leão XIII (1878–1903)</h3>
+                    <p>Famoso por sua alta capacidade intelectual, utilizou a filosofia de São Tomás de Aquino como escudo acadêmico contra o relativismo. Escreveu também cartas fundamentais alertando sobre os perigos da Maçonaria.</p>
+                </div>
+                <div class="papa-card">
+                    <h3>São Pio X (1903–1914)</h3>
+                    <p>Considerado a figura central do combate direto. Publicou o documento mais agressivo contra os intelectuais modernistas infiltrados, definindo o movimento como a "síntese de todas as heresias" na carta <em>Pascendi</em>.</p>
+                </div>
+                <div class="papa-card">
+                    <h3>Pio XI (1922–1939)</h3>
+                    <p>Atuou no período entre a Primeira e a Segunda Guerra Mundial. Defendeu energicamente a autonomia da Igreja contra os totalitarismos modernos da época e combateu o avanço do falso ecumenismo e do relativismo entre as religiões.</p>
+                </div>
+                <div class="papa-card">
+                    <h3>Pio XII (1939–1958)</h3>
+                    <p>Conduziu a Igreja durante a Segunda Guerra Mundial e o início da Guerra Fria. Blindou a liturgia tradicional e a teologia clássica contra as novas correntes intelectuais do pós-guerra, encerrando este ciclo de forte conservadorismo.</p>
+                </div>
+            </div>
+        </section>
+
+        <button class="btn-retratil" onclick="alternarAbaRetratil()">
+            <span>ANÁLISE FILOSÓFICA: POR QUE O MODERNISMO É MAU POR SI SÓ?</span>
+            <span id="setaAba">&darr; Clique para abrir</span>
+        </button>
+        <div id="abaFilosofica" class="conteudo-retratil">
+            <p>
+                Para entender a gravidade dessa batalha, é preciso compreender por que o relativismo modernista é nocivo por sua própria natureza. Esse movimento não surgiu do nada; ele herda as raízes de pensamentos muito mais antigos, como a filosofia de <strong>Immanuel Kant</strong>, que defendia que o ser humano não é capaz de conhecer as verdades absolutas por fora, mas apenas aquilo que ele sente interiormente. Ao transferir a religião do campo das verdades reais para o campo dos "sentimentos pessoais", o modernismo desassocia totalmente o ser humano de um Deus real.
+            </p>
+            <p>
+                O grande perigo disso é puramente lógico: <strong>se a verdade é relativa e cada pessoa possui o seu próprio "Deus interno" particular, a conclusão matemática inevitável é a de que Deus não existe por si mesmo</strong>. Ele passa a ser apenas uma criação da mente humana. Esse pensamento arranca o amparo espiritual intrínseco do ser humano — que é naturalmente religioso — e abre as portas para o ateísmo e o vazio existencial.
+            </p>
+            <p>
+                Essa quebra com o sagrado pavimentou o caminho para os grandes males estruturais da sociedade contemporânea. A <strong>Revolução Industrial</strong> e o avanço técnico desenfreado trouxeram consigo um materialismo agressivo, onde o homem passou a valer apenas pelo que produz. Desse materialismo puramente focado no mundo físico e econômico, nasceram correntes destrutivas como o <strong>Comunismo, o Socialismo e o Liberalismo desenfreado</strong>. Foi justamente esse cenário de degradação humana e espiritual que o Papa <strong>Leão XIII</strong> enfrentou e condenou de forma vigorosa, mostrando que quando a sociedade abandona as verdades eternas de um Deus eterno, ela se torna escrava de suas próprias ideologias materiais.
+            </p>
+        </div>
+
+        <section class="sistema-box">
+            <h2>Painel de Estudos: Encíclicas e Cartas de Combate</h2>
+            <p>Selecione um Papa para filtrar os documentos históricos ou gerencie o acervo em tempo real utilizando os comandos do script.</p>
+            
+            <div class="controles">
+                <label for="filtroPapa"><strong>Filtrar por Papa:</strong></label>
+                <select id="filtroPapa" onchange="filtrarPorPapa()">
+                    <option value="todos">Todos os Papas (Pio IX a Pio XII)</option>
+                    <option value="Pio IX">Pio IX</option>
+                    <option value="Leão XIII">Leão XIII</option>
+                    <option value="São Pio X">São Pio X</option>
+                    <option value="Pio XI">Pio XI</option>
+                    <option value="Pio XII">Pio XII</option>
+                </select>
+            </div>
+
+            <hr>
+
+            <h3>Cadastrar Novo Documento no Acervo (Operações de Array)</h3>
+            <div class="controles">
+                <input type="text" id="novoNome" placeholder="Nome do Documento / Encíclica">
+                <select id="novoPapa">
+                    <option value="Pio IX">Pio IX</option>
+                    <option value="Leão XIII">Leão XIII</option>
+                    <option value="São Pio X">São Pio X</option>
+                    <option value="Pio XI">Pio XI</option>
+                    <option value="Pio XII">Pio XII</option>
+                </select>
+                <input type="number" id="novoAno" placeholder="Ano">
+                <input type="text" id="novoResumo" placeholder="Breve resumo conceitual do documento">
+                
+                <button onclick="adicionarNoInicio()">Adicionar no Início (.unshift)</button>
+                <button onclick="removerUltimo()">Remover Último (.pop)</button>
+            </div>
+
+            <h3>Documentos Selecionados</h3>
+            <ul id="listaHtml" class="lista-enciclicas">
+                </ul>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Projeto de Algoritmos e Linguagem de Programação - Semana 12</p>
+    </footer>
+
+    <script>
+        // ==========================================
+        // FUNÇÃO DA ABA RETRÁTIL (DOM EXTRA)
+        // ==========================================
+        function alternarAbaRetratil() {
+            let aba = document.getElementById("abaFilosofica");
+            let seta = document.getElementById("setaAba");
+            
+            if (aba.style.display === "block") {
+                aba.style.display = "none";
+                seta.innerHTML = "&darr; Clique para abrir";
+            } else {
+                aba.style.display = "block";
+                seta.innerHTML = "&uarr; Clique para fechar";
+            }
+        }
+
+        // ==========================================
+        // LÓGICA DO BARALHO DESLIZANTE (7 SEGUNDOS)
+        // ==========================================
+        const legendasPapas = [
+            "Papa Pio IX (1846 – 1878)",
+            "Papa Leão XIII (1878 – 1903)",
+            "Papa São Pio X (1903 – 1914)",
+            "Papa Pio XII (1939 – 1958)"
+        ];
+
+        let indexCarrossel = 0;
+        const totalFotos = legendasPapas.length;
+
+        function rodarCarrossel() {
+            indexCarrossel++;
+            if (indexCarrossel >= totalFotos) {
+                indexCarrossel = 0;
+            }
+            
+            // Move a esteira de fotos para a esquerda multiplicando a largura da foto (320px)
+            let deslocamento = indexCarrossel * 320;
+            document.getElementById("esteiraPapas").style.transform = `translateX(-${deslocamento}px)`;
+            
+            // Altera a legenda correspondente
+            document.getElementById("legendaPapa").innerText = legendasPapas[indexCarrossel];
+        }
+        
+        // Dispara a animação do baralho a cada 7 segundos
+        setInterval(rodarCarrossel, 7000);
+
+        // ==========================================
+        // ALGORITMO JAVASCRIPT
+        // ==========================================
+        let bibliotecaEnciclicas = [
+            { 
+                nome: "Quanta Cura & Syllabus", 
+                papa: "Pio IX", 
+                ano: 1864, 
+                resumo: "Um catálogo direto condenando as ideologias do socialismo, do liberalismo extremado e as primeiras correntes filosóficas do modernismo.", 
+                link: "https://www.vatican.va/content/pius-ix/it/documents/enciclica-quanta-cura-8-dicembre-1864.html" 
+            },
+            { 
+                nome: "Aeterni Patris", 
+                papa: "Leão XIII", 
+                ano: 1879, 
+                resumo: "Decreto que recupera a filosofia medieval tomista como o padrão oficial da Igreja para combater de frente as novas ideias científicas e sociais modernas.", 
+                link: "https://www.vatican.va/content/leo-xiii/pt/encyclicals/documents/hf_l-xiii_enc_04081879_aeterni-patris.html" 
+            },
+            { 
+                nome: "Pascendi Dominici Gregis", 
+                papa: "São Pio X", 
+                ano: 1907, 
+                resumo: "O principal documento antimodernista da história. Classifica as tentativas de relativização teológica como o acúmulo e síntese de todos os erros da fé.", 
+                link: "https://www.vatican.va/content/pius-x/pt/encyclicals/documents/hf_p-x_enc_19070908_pascendi-dominici-gregis.html" 
+            },
+            { 
+                nome: "Mortalium Animos", 
+                papa: "Pio XI", 
+                ano: 1928, 
+                resumo: "Documento que barra o avanço do relativismo religioso e de tentativas externas de alterar a estrutura tradicional e a unidade da doutrina.", 
+                link: "https://www.vatican.va/content/pius-xi/pt/encyclicals/documents/hf_p-xi_enc_19280106_mortalium-animos.html" 
+            },
+            { 
+                nome: "Humani Generis", 
+                papa: "Pio XII", 
+                ano: 1950, 
+                resumo: "Alerta e barra uma série de novas teorias intelectuais surgidas no pós-guerra que tentavam distorcer as verdades estabelecidas e os dogmas tradicionais.", 
+                link: "https://www.vatican.va/content/pius-xii/pt/encyclicals/documents/hf_p-xii_enc_12081950_humani-generis.html" 
+            }
+        ];
+
+        function atualizarTabela(lista) {
+            let listaHtml = document.getElementById("listaHtml");
+            listaHtml.innerHTML = ""; 
+
+            for (let i = 0; i < lista.length; i++) {
+                let doc = lista[i];
+                listaHtml.innerHTML += `
+                    <li>
+                        <div class="enciclica-header">
+                            <span><strong>${doc.nome}</strong></span>
+                            <span>Papa ${doc.papa} (${doc.ano})</span>
+                        </div>
+                        <div class="enciclica-resumo">${doc.resumo}</div>
+                        <a href="${doc.link}" target="_blank">Ler Documento Oficial &rarr;</a>
+                    </li>
+                `;
+            }
+        }
+
+        function filtrarPorPapa() {
+            let papaSelecionado = document.getElementById("filtroPapa").value;
+
+            if (papaSelecionado === "todos") {
+                atualizarTabela(bibliotecaEnciclicas);
+            } else {
+                let listaFiltrada = [];
+                for (let i = 0; i < bibliotecaEnciclicas.length; i++) {
+                    if (bibliotecaEnciclicas[i].papa === papaSelecionado) {
+                        listaFiltrada.push(bibliotecaEnciclicas[i]);
+                    }
+                }
+                atualizarTabela(listaFiltrada);
+            }
+        }
+
+        function adicionarNoInicio() {
+            let nome = document.getElementById("novoNome").value;
+            let papa = document.getElementById("novoPapa").value;
+            let ano = document.getElementById("novoAno").value;
+            let resumo = document.getElementById("novoResumo").value;
+
+            if(nome === "" || ano === "" || resumo === "") {
+                alert("Por favor, preencha todos os campos!");
+                return;
+            }
+
+            let novaEnciclica = {
+                nome: nome,
+                papa: papa,
+                ano: parseInt(ano),
+                resumo: resumo,
+                link: "https://www.vatican.va/content/vatican/pt.html"
+            };
+
+            bibliotecaEnciclicas.unshift(novaEnciclica); 
+            atualizarTabela(bibliotecaEnciclicas); 
+            
+            document.getElementById("novoNome").value = "";
+            document.getElementById("novoAno").value = "";
+            document.getElementById("novoResumo").value = "";
+        }
+
+        function removerUltimo() {
+            if (bibliotecaEnciclicas.length > 0) {
+                bibliotecaEnciclicas.pop(); 
+                atualizarTabela(bibliotecaEnciclicas);
+            } else {
+                alert("A biblioteca está vazia!");
+            }
+        }
+
+        atualizarTabela(bibliotecaEnciclicas);
+    </script>
+</body>
+</html>
